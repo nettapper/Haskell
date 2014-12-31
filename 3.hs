@@ -8,3 +8,5 @@ isPrime a = if a <= 1 then False else  -- Take care of case less or equal to 1
                 then False
                 else True
                     where divEvenList = [x | x <- [2..(a-1)], (mod a x) == 0]
+
+largestPrime a = maximum [x | x <- [1..a], isPrime x]
