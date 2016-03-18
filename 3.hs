@@ -2,7 +2,7 @@
 -- What is the largest prime factor of the number 600851475143?
 
 -- todo
--- Is Prime is very inefficient
+-- Program is still to slow
 
 -- Integral because isPrime should only deal with whole numbers
 isPrime :: Integral a => a -> Bool
@@ -17,4 +17,7 @@ isPrime a = if a <= 1 then False else  -- Take care of case less or equal to 1
               -- then False
               -- else ......
 
-largestPrime a = maximum [x | x <- [1..a], isPrime x]
+-- largestPrime a = maximum [x | x <- [1..a], (mod a x) == 0, isPrime x]
+factors a = [x | x <- [1..a], (mod a x) == 0]
+
+largestPrime a = maximum [x | x <- (factors a), isPrime x]
