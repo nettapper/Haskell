@@ -12,6 +12,11 @@ toDigits n
 toDigitsRev :: Integer -> [Integer]
 toDigitsRev n = reverse $ toDigits n
 
--- doubleEveryOther :: [Integer] -> [Integer]
+-- double every number (left to right) starting w/ numb at position 2
+doubleEveryOther :: [Integer] -> [Integer]
+doubleEveryOther [] = []
+doubleEveryOther (x:[]) = [x]
+doubleEveryOther (x:y:ys) = x:(2*y):(doubleEveryOther ys)
+
 -- sumDigits :: [Integer] -> Integer
 -- validate :: Integer -> Bool
