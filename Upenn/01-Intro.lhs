@@ -5,7 +5,7 @@ i<!--
 Haskell Basics
 ==============
 
-CIS 194 Week 1  
+CIS 194 Week 1
 14 January 2013
 
 Suggested reading:
@@ -46,7 +46,7 @@ Taken together, these result in an entirely different way of thinking about
 programming.  Much of our time this semester will be spent exploring
 this way of thinking.
 
-**Pure** 
+**Pure**
 
 <img src="/images/pure.jpg" width="200px" />
 
@@ -205,7 +205,7 @@ Here is some Haskell code:
 
 > x :: Int
 > x = 3
-> 
+>
 > -- Note that normal (non-literate) comments are preceded by two hyphens
 > {- or enclosed
 >    in curly brace/hyphen pairs. -}
@@ -281,13 +281,13 @@ Finally, there are booleans, characters, and strings:
 > b1, b2 :: Bool
 > b1 = True
 > b2 = False
-> 
+>
 > -- Unicode characters
 > c1, c2, c3 :: Char
 > c1 = 'x'
-> c2 = 'Ã˜'
-> c3 = 'ãƒ€'
-> 
+> c2 = 'a'
+> c3 = '€'
+>
 > -- Strings are lists of characters with special syntax
 > s :: String
 > s = "Hello, Haskell!"
@@ -428,7 +428,7 @@ As a more complex (but more contrived) example:
 
 > foo :: Integer -> Integer
 > foo 0 = 16
-> foo 1 
+> foo 1
 >   | "Haskell" > "C++" = 3
 >   | otherwise         = 4
 > foo n
@@ -443,7 +443,7 @@ wanted to abstract out the test of evenness used in defining
 `hailstone`.  A first attempt is shown below:
 
 > isEven :: Integer -> Bool
-> isEven n 
+> isEven n
 >   | n `mod` 2 == 0 = True
 >   | otherwise      = False
 
@@ -568,7 +568,7 @@ applying the hailstone transformation once to `n`.
 Functions on lists
 ------------------
 
-We can write functions on lists using *pattern matching*. 
+We can write functions on lists using *pattern matching*.
 
 > -- Compute the length of a list of Integers.
 > intListLength :: [Integer] -> Integer
