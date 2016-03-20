@@ -19,8 +19,14 @@ doubleEveryOther (x:[]) = [x]
 doubleEveryOther (x:y:ys) = x:(2*y):(doubleEveryOther ys)
 
 -- calculate the sum of all numbers in list
+--  [16,7,12,5] = 1 + 6 + 7 + 1 + 2 + 5 = 22
 sumDigits :: [Integer] -> Integer
 sumDigits [] = 0
-sumDigits (x:xs) = x + sumDigits xs
+sumDigits (x:xs)
+    | x >= 10 = sumDigits (toDigits x) + sumDigits xs
+    | otherwise = x + sumDigits xs
 
--- validate :: Integer -> Bool
+-- double every second digit (right to left), sum the digits,
+-- calculate the remainder and return true if its 0
+validate :: Integer -> Bool
+validate n = mod (sumDigits $ doubleEveryOther $ toDigitsRev n) 10  == 0
