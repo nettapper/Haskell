@@ -18,5 +18,9 @@ doubleEveryOther [] = []
 doubleEveryOther (x:[]) = [x]
 doubleEveryOther (x:y:ys) = x:(2*y):(doubleEveryOther ys)
 
--- sumDigits :: [Integer] -> Integer
+-- calculate the sum of all numbers in list
+sumDigits :: [Integer] -> Integer
+sumDigits [] = 0
+sumDigits (x:xs) = x + sumDigits xs
+
 -- validate :: Integer -> Bool
