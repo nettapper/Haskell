@@ -30,3 +30,11 @@ sumDigits (x:xs)
 -- calculate the remainder and return true if its 0
 validate :: Integer -> Bool
 validate n = mod (sumDigits $ doubleEveryOther $ toDigitsRev n) 10  == 0
+
+
+
+-- The Towers of Hanoi
+
+-- type Peg = String
+-- type Move = (Peg, Peg)
+-- hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
