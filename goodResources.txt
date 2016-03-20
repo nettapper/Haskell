@@ -1,0 +1,5 @@
+After watching a talk, I figured that I would try Chris Allens reccomendations
+https://github.com/bitemyapp/learnhaskell-
+
+An extensive list of things to look through depending on experience level
+http://stackoverflow.com/questions/1012573/getting-started-with-haskell
