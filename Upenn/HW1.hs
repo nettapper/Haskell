@@ -35,6 +35,23 @@ validate n = mod (sumDigits $ doubleEveryOther $ toDigitsRev n) 10  == 0
 
 -- The Towers of Hanoi
 
--- type Peg = String
--- type Move = (Peg, Peg)
--- hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+-- To move n discs (stacked in increasing size) from peg a to peg b
+-- using peg c as temporary storage,
+-- 1. move n − 1 discs from a to c using b as temporary storage
+-- 2. move the top disc from a to b
+-- 3. move n − 1 discs from c to b using a as temporary storage.
+
+-- Example: hanoi 1 "a" "b" "c" == [("a","b")]
+-- Example: hanoi 2 "a" "b" "c" == [("a","c"), ("a","b"), ("c","b")]
+-- Example: hanoi 3 "a" "b" "c" == [("a","c"), ("a","b"), ("c","b"), ("a","c"), ]
+
+type Peg = String
+type Move = (Peg, Peg)
+
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi numOfDisks start target temp
+    | numOfDisks == 0 = []
+    | numOfDisks == 1 = (start, target) : []
+    | numOfDisks == 2 = (start, temp) : (start, target) : (temp, target) : []
+    | otherwise = nextHanoi start temp target ++ [(start, target)] ++ nextHanoi temp target start
+    where nextHanoi = hanoi (numOfDisks - 1)
