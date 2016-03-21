@@ -35,15 +35,14 @@ validate n = mod (sumDigits $ doubleEveryOther $ toDigitsRev n) 10  == 0
 
 -- The Towers of Hanoi
 
--- To move n discs (stacked in increasing size) from peg a to peg b
--- using peg c as temporary storage,
--- 1. move n − 1 discs from a to c using b as temporary storage
--- 2. move the top disc from a to b
--- 3. move n − 1 discs from c to b using a as temporary storage.
+-- To move n discs (stacked in increasing size) from peg a to peg c
+-- using peg b as temporary storage,
+-- 1. move n − 1 discs from a to b using c as temporary storage
+-- 2. move the top disc from a to c
+-- 3. move n − 1 discs from b to c using a as temporary storage.
 
--- Example: hanoi 1 "a" "b" "c" == [("a","b")]
--- Example: hanoi 2 "a" "b" "c" == [("a","c"), ("a","b"), ("c","b")]
--- Example: hanoi 3 "a" "b" "c" == [("a","c"), ("a","b"), ("c","b"), ("a","c"), ]
+-- Example: hanoi 1 "a" "b" "c" == [("a","c")]
+-- Example: hanoi 2 "a" "b" "c" == [("a","b"), ("a","c"), ("b","c")]
 
 type Peg = String
 type Move = (Peg, Peg)
