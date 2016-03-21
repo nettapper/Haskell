@@ -49,9 +49,9 @@ type Peg = String
 type Move = (Peg, Peg)
 
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi numOfDisks start target temp
+hanoi numOfDisks start temp target
     | numOfDisks == 0 = []
     | numOfDisks == 1 = (start, target) : []
     | numOfDisks == 2 = (start, temp) : (start, target) : (temp, target) : []
-    | otherwise = nextHanoi start temp target ++ [(start, target)] ++ nextHanoi temp target start
+    | otherwise = nextHanoi start target temp ++ [(start, target)] ++ nextHanoi temp start target
     where nextHanoi = hanoi (numOfDisks - 1)
