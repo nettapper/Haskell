@@ -52,5 +52,6 @@ hanoi numOfDisks start temp target
     | numOfDisks == 0 = []
     | numOfDisks == 1 = (start, target) : []
     | numOfDisks == 2 = (start, temp) : (start, target) : (temp, target) : []
-    | otherwise = nextHanoi start target temp ++ [(start, target)] ++ nextHanoi temp start target
-    where nextHanoi = hanoi (numOfDisks - 1)
+    | otherwise = hanoiFromStart ++ [(start, target)] ++ hanoiFromTemp
+    where hanoiFromStart = hanoi (numOfDisks - 1) start target temp
+          hanoiFromTemp = hanoi (numOfDisks - 1) temp start target
