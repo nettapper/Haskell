@@ -6,6 +6,7 @@ maybeRead s = case reads s of
                   _           -> Nothing
 getListFromString :: String -> Maybe [Integer]
 getListFromString str = maybeRead $ "[" ++ str ++ "]"
+
 askUser :: IO [Integer]
 askUser =
     putStrLn "Enter a list of numbers (sep. by commas):" >>

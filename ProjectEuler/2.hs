@@ -9,5 +9,5 @@ myFibs = 0 : 1 : next myFibs
 fib = take 100 $ drop 2 myFibs  -- drop 2 to get same format as question (100 is well over 4mill)
 
 evenFib = [x | x <- fib, x < 4000000, (x `mod` 2) == 0]
-          
+
 ans = sum evenFib
