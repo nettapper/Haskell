@@ -13,11 +13,16 @@ parseMessage s
   | first == "E" = LogMessage (Error (read second::Int)) (read third::Int) rest
   | otherwise    = Unknown s
     where
-        ss = words s -- TODO trim whitespace
-        first = head ss
+        ss     = words s -- TODO trim whitespace
+        first  = head ss
         second = ss !! 1
-        third = ss !! 2
-        rest = unwords $ drop 3 ss
+        third  = ss !! 2
+        rest   = unwords $ drop 3 ss
 
 parse :: String -> [LogMessage]
 parse s = map parseMessage $ lines s
+
+insert :: LogMessage -> MessageTree -> MessageTree
+-- insert lm mt = case lm of
+--                     Unknown -> mt
+--                     _       -> "todo insert"
