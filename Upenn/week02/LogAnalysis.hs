@@ -30,3 +30,11 @@ insert lm@(LogMessage _ time _) mt = case mt of
                                                                                      then Node l nodelm (insert lm r)
                                                                                      else Node (insert lm l) nodelm r
                                           n@(Node _ (Unknown _) _) -> n
+
+build :: [LogMessage] -> MessageTree
+build lms = build' lms Leaf
+
+build' :: [LogMessage] -> MessageTree -> MessageTree
+build' ls mt = foldl (flip insert) mt ls
+-- build' [] mt = mt
+-- build' (l:ls) mt = build' ls $ insert l mt
