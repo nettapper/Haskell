@@ -23,6 +23,10 @@ parse :: String -> [LogMessage]
 parse s = map parseMessage $ lines s
 
 insert :: LogMessage -> MessageTree -> MessageTree
--- insert lm mt = case lm of
---                     Unknown -> mt
---                     _       -> "todo insert"
+insert (Unknown _) mt = mt
+insert lm@(LogMessage _ time _) mt = case mt of
+                                          Leaf -> Node Leaf lm Leaf
+                                          (Node l nodelm@(LogMessage _ nodeTime _) r) -> if time > nodeTime
+                                                                                     then Node l nodelm (insert lm r)
+                                                                                     else Node (insert lm l) nodelm r
+                                          n@(Node _ (Unknown _) _) -> n
