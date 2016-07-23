@@ -38,3 +38,7 @@ build' :: [LogMessage] -> MessageTree -> MessageTree
 build' ls mt = foldl (flip insert) mt ls
 -- build' [] mt = mt
 -- build' (l:ls) mt = build' ls $ insert l mt
+
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf = []
+inOrder (Node l lm r) = inOrder l ++ [lm] ++ inOrder r
