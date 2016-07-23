@@ -42,3 +42,11 @@ build' ls mt = foldl (flip insert) mt ls
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
 inOrder (Node l lm r) = inOrder l ++ [lm] ++ inOrder r
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong lm = map getString $ filter test $ inOrder $ build lm
+ where
+     test (LogMessage (Error i) _ _) = i >= 50
+     test _ = False
+     getString (LogMessage _ _ s) = s
+     getString (Unknown s) = s
