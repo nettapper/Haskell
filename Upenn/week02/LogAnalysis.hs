@@ -33,11 +33,10 @@ insert lm@(LogMessage _ time _) mt = case mt of
 
 build :: [LogMessage] -> MessageTree
 build lms = build' lms Leaf
-
-build' :: [LogMessage] -> MessageTree -> MessageTree
-build' ls mt = foldl (flip insert) mt ls
--- build' [] mt = mt
--- build' (l:ls) mt = build' ls $ insert l mt
+  where
+      build' ls mt = foldl (flip insert) mt ls
+      -- build' [] mt = mt
+      -- build' (l:ls) mt = build' ls $ insert l mt
 
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
