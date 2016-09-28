@@ -14,3 +14,6 @@ skips' l n
 dropper :: [a] -> Int -> [a]
 dropper [] _ = []
 dropper l  n = take 1 (drop n l) ++ dropper (drop (n+1) l) n
+
+
+-- for the local max: map ([a] -> [Maybe a]) then filter out nothing
