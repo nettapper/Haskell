@@ -9,4 +9,7 @@ main :: IO ()
 main = do
     putStrLn greeting
     printSecond
-      where greeting = "YAAARRR"
+      -- where greeting = "YAAARRR"
+
+greeting :: String
+greeting = "YAAARRR"
