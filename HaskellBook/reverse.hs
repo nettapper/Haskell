@@ -10,3 +10,6 @@ rvrs s = concat [last, " ", middle, " ", first]
       middle = head $ take 1 $ drop 1 ws
       first  = head $ take 1 ws
 
+main :: IO ()
+main = print $ rvrs "Curry is awesome"
+
