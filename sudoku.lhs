@@ -11,7 +11,7 @@ approach naturally leads to a compositional style, and relies
 on lazy evaluation for efficiency.  Our development proceeds
 by starting with a simple but impractical program, which is
 then refined in a series of steps, ending up with a program
-that can solve any newspaper Sudoku puzzle in an instant. 
+that can solve any newspaper Sudoku puzzle in an instant.
 
 
 Library file
@@ -19,7 +19,7 @@ Library file
 
 We use a few things from the list library:
 
-> import Data.List 
+> import Data.List
 
 
 Basic declarations
@@ -40,7 +40,7 @@ is important for various properties that we rely on.
 > type Value            = Char
 
 
-Basic definitions 
+Basic definitions
 -----------------
 
 > boxsize               :: Int
@@ -166,7 +166,7 @@ Extracting boxes is more complicated:
 > chop n []             =  []
 > chop n xs             =  take n xs : chop n (drop n xs)
 
-Example: if boxsize = 2, then we have 
+Example: if boxsize = 2, then we have
 
    [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 
@@ -184,7 +184,7 @@ Example: if boxsize = 2, then we have
 
    [[[[1,2],[5,6]],[[3,4],[7,8]]],[[[9,10]],[[11,12]]]]
 
-                          | 
+                          |
                         unpack
                           |
                           v
@@ -223,7 +223,7 @@ values for that square, giving a matrix of choices:
 >                          where
 >                             choice v = if empty v then values else [v]
 
-Reducing a matrix of choices to a choice of matrices can be defined 
+Reducing a matrix of choices to a choice of matrices can be defined
 in terms of the normal cartesian product of a list of lists, which
 generalises the cartesian product of two lists:
 
@@ -292,7 +292,7 @@ Repeatedly pruning
 ------------------
 
 After pruning, there may now be new single entries, for which pruning
-again may further reduce the search space.  More generally, we can 
+again may further reduce the search space.  More generally, we can
 iterate the pruning process until this has no further effect, which
 in mathematical terms means that we have found a "fixpoint".  The
 simplest Sudoku puzzles can be solved in this way.
@@ -352,7 +352,7 @@ Clearly, a blocked matrix cannot lead to a solution.  However, our
 previous solver does not take account of this.  More importantly,
 a choice that leads to a blocked matrix can be duplicated many
 times by the collapse function, because this function simply
-considers all possible combinations of choices.  This is the 
+considers all possible combinations of choices.  This is the
 primary source of inefficiency in our previous solver.
 
 This problem can be addressed by expanding choices one square at
@@ -380,15 +380,15 @@ it only collapses the first square with more than one choice:
 >       (rows1,row:rows2) = break (any (not . single)) m
 >       (row1,cs:row2)    = break (not . single) row
 
-Note that there is no longer any need to check for valid grids at 
-the end, because the process by which solutions are constructed 
+Note that there is no longer any need to check for valid grids at
+the end, because the process by which solutions are constructed
 guarantees that this will always be the case.  There also doesn't
 seem to be any benefit in using "fix prune" rather than "prune"
 above; the program is faster without using fix.  In fact, our
 program now solves any newspaper Sudoku puzzle in an instant!
 
 Exercise: modify the expand function to collapse a square with the
-smallest number of choices greater than one, and see what effect 
+smallest number of choices greater than one, and see what effect
 this change has on the performance of the solver.
 
 
