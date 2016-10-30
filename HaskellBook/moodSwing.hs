@@ -40,3 +40,27 @@ start = (\ (x:xs) -> x)
 -- Should return 1 from (1,2)
 fff (a,b) = a
 
+
+
+-- Type test vs data test
+
+-- Type alias
+
+type Test = String
+
+f1 :: Test -> Bool
+f1 x = True
+
+d1 = f1 "Hey"               -- this works
+d1' = f1 ("Hey" :: String)  -- so does this
+
+-- Data declaration
+
+data Test2 = Test2 String
+
+f2 :: Test2 -> Bool
+f2 x = True
+
+-- d2 = f2 "Hey"               -- now this won't work
+-- d2' = f2 ("Hey" :: String)  -- this won't work either
+d2'' = f2 (Test2 "Hey") -- this works
