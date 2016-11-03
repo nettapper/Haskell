@@ -15,3 +15,7 @@ one a _ = a
 
 two :: a -> a -> a
 two _ a = a
+
+-- Implement a -> b -> b. How many implementations can it have? Does the behavior change when the types of 𝑎 and 𝑏 change?
+f :: a -> b -> b
+f _ b = b  -- I can only think of one
