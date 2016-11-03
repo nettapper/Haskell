@@ -7,3 +7,11 @@ myId a = a
 
 -- and this one won't teminate
 -- myId a = myId $ myId a
+
+
+-- This hypothetical function a -> a -> a has two–and only two–implementations. Write both possi- ble versions of a -> a -> a. A er doing so, try to violate the constraints of parametrically polymorphic values we outlined above.
+one :: a -> a -> a
+one a _ = a
+
+two :: a -> a -> a
+two _ a = a
