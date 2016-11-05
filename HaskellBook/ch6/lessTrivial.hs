@@ -1,10 +1,15 @@
+-- you can set -Wall in ghci with
+-- :set -Wall
+
 module LessTrivial where
 
 data DayOfTheWeek =
   Mon | Tue | Weds | Thu | Fri | Sat | Sun
+  deriving Show
 
 data Date =
   Date DayOfTheWeek Int
+  deriving Show
 
 instance Eq DayOfTheWeek where
   (==) Mon Mon   = True
@@ -14,7 +19,7 @@ instance Eq DayOfTheWeek where
   (==) Fri Fri   = True
   (==) Sat Sat   = True
   (==) Sun Sun   = True
-  (==) _ _       = False
+  (==) _ _       = False  -- Wall will complain if I leave this out
 
 iHateMondays = Mon == Mon
 
