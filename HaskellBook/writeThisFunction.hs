@@ -36,3 +36,11 @@ a _ a = a
 a' :: (a -> b) -> a -> b
 a' a2b = a2b
 -- a' a2b a = a2b a
+
+
+-- Unless the result is [], the resulting list has values that are all
+-- the same value. The list will always be the same length.
+convList :: a -> [a]
+-- convList a = []
+convList a = [a]
+
