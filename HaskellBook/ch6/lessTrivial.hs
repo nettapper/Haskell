@@ -40,3 +40,10 @@ instance Eq Date where
 spooky = Date Fri 13
 
 isItSpooky = spooky == spooky
+
+-- Will they work??
+
+v1 = max (length [1, 2, 3]) (length [8, 9, 10, 11, 12])
+v2 = compare (3 * 4) (3 * 5)
+-- v3 = compare "Julie" True  -- this one doesn't
+v4 = (5 + 3) > (3 + 6)
