@@ -32,3 +32,30 @@ data Sentence =
 
 s1 = Sentence "dogs" "drool"  -- this does type check .... partial data type constructor
 s2 = Sentence "Julie" "loves" "dogs"
+
+
+
+-- Given a datatype declaration, what can we do?
+
+data Rocks =
+  Rocks String
+  deriving (Eq, Show)
+
+data Yeah =
+  Yeah Bool
+  deriving (Eq, Show)
+
+data Papu =
+  Papu Rocks Yeah
+  deriving (Eq, Show)
+
+-- which will type check?
+-- phew = Papu "chases" True  -- Will not
+
+truth = Papu (Rocks "chomskydoz") (Yeah True)  -- Will
+
+equalityForall :: Papu -> Papu -> Bool  -- Will
+equalityForall p p' = p == p'
+
+-- comparePapus :: Papu -> Papu -> Bool  -- Will not
+-- comparePapus p p' = p > p'
