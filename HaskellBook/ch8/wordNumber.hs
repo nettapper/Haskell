@@ -1,6 +1,6 @@
 module WordNumber where
 
-import Data.List (intersperse)
+import Data.List (intersperse, intercalate)
 
 digitToWord :: Int -> String
 digitToWord n = case n of
