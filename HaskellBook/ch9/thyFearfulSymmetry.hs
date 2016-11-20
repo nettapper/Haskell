@@ -13,3 +13,26 @@ myWords s = myWordsHelper s []
 
 dropWordAndSpace :: String -> String
 dropWordAndSpace l = dropWhile (== ' ') (dropWhile (/= ' ') l)
+
+
+-- myLines :: String -> [String]
+-- myLines x = myLinesHelper x []
+
+-- myLinesHelper :: String -> [String] -> [String]
+-- myLinesHelper [] xs = xs
+-- myLinesHelper x xs = myLinesHelper (dropLine x) (xs ++ [takeLine x])
+--   where dropLine = dropWhile (== '\n') . dropWhile (/= '\n')
+--         takeLine = takeWhile (/= '\n')
+
+myWords' :: String -> [String]
+myWords' x = splitter ' ' x []
+
+myLines' :: String -> [String]
+myLines' x = splitter '\n' x []
+
+
+splitter :: Char -> String -> [String] -> [String]
+splitter _ [] xs = xs
+splitter delimiter x xs = splitter delimiter (dropLine x) (xs ++ [takeLine x])
+  where dropLine = dropWhile (== delimiter) . dropWhile (/= delimiter)
+        takeLine = takeWhile (/= delimiter)
