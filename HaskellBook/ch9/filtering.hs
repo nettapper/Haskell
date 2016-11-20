@@ -13,8 +13,10 @@ howManyMultOfThree = length multOfThree
 -- Prelude> myFilter "the brown dog was a goof"
 --          ["brown","dog","was","goof"]
 
+myFilter :: String -> [String]
 myFilter xs = filter (not . articles) $ words xs
-  where articles word
+  where articles :: String -> Bool
+        articles word
           | word == "a" = True
           | word == "the" = True
           | word == "an" = True
