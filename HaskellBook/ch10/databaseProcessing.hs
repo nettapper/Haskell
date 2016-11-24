@@ -36,12 +36,21 @@ filterDbNumber = foldr onlyDbNumber []
                                                (DbDate _) -> integerList
 
 mostRecent :: [DatabaseItem] -> UTCTime
-mostRecent = undefined
+mostRecent = head . foldr mostRecentTime [] . filterDbDate
+  where mostRecentTime :: UTCTime -> [UTCTime] -> [UTCTime]
+        mostRecentTime time [] = [time]
+        mostRecentTime time (x:xs) = if x > time
+                                        then [x]
+                                        else [time]
 
 sumDb :: [DatabaseItem] -> Integer
-sumDb = undefined
+sumDb = sum . filterDbNumber
+-- sumDb dbs = foldr (+) 0 $ filterDbNumber dbs
+
 
 -- You'll probably need to use fromIntegral
 -- to get from Integer to Double.
 avgDb :: [DatabaseItem] -> Double
-avgDb = undefined
+avgDb dbs = sum / count
+  where sum = fromIntegral $ sumDb dbs
+        count = fromIntegral $ length $ filterDbNumber dbs
