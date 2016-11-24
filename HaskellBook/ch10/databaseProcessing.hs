@@ -25,10 +25,15 @@ filterDbDate = foldr onlyUTCTime []
         onlyUTCTime dbItem utcList = case dbItem of
                                           (DbString _) -> utcList
                                           (DbNumber _) -> utcList
-                                          (DbDate utc) -> [utc] ++ utcList
+                                          (DbDate utc) -> utc : utcList
 
 filterDbNumber :: [DatabaseItem] -> [Integer]
-filterDbNumber = undefined
+filterDbNumber = foldr onlyDbNumber []
+  where onlyDbNumber :: DatabaseItem -> [Integer] -> [Integer]
+        onlyDbNumber dbItem integerList = case dbItem of
+                                               (DbString _) -> integerList
+                                               (DbNumber i) -> i : integerList
+                                               (DbDate _) -> integerList
 
 mostRecent :: [DatabaseItem] -> UTCTime
 mostRecent = undefined
