@@ -17,3 +17,12 @@ myFibs = 1 : scanl (+) 1 myFibs
 
 myFibsN :: Int -> Integer
 myFibsN index = myFibs !! index
+
+myFibs20 :: [Integer]
+myFibs20 = take 20 $ 1 : scanl (+) 1 myFibs
+
+myFibsU100 :: [Integer]
+myFibsU100 = takeWhile (< 100) myFibs
+
+myFact :: [Integer]
+myFact = scanl (*) 1 [2..]
