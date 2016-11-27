@@ -10,3 +10,7 @@ revr :: Foldable t => t a -> [a]
 revr = foldr (\a b -> b ++ [a]) []
 
 -- the difference between foldl and foldr is apparent
+
+
+myFibs :: [Integer]
+myFibs = 1 : scanl (+) 1 myFibs
