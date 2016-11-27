@@ -14,3 +14,6 @@ revr = foldr (\a b -> b ++ [a]) []
 
 myFibs :: [Integer]
 myFibs = 1 : scanl (+) 1 myFibs
+
+myFibsN :: Int -> Integer
+myFibsN index = myFibs !! index
