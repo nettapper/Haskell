@@ -25,3 +25,8 @@ seekritFunc :: String -> Int
 seekritFunc x =
   div (sum (map length (words x)))
       (length (words x))
+
+seekritFunc' :: String -> Double
+seekritFunc' x =
+  (/) (fromInteger $ toInteger (sum (map length (words x))))
+      (fromInteger $ toInteger (length (words x)))
