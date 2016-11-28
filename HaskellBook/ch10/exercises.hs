@@ -30,3 +30,13 @@ seekritFunc' :: String -> Double
 seekritFunc' x =
   (/) (fromInteger $ toInteger (sum (map length (words x))))
       (fromInteger $ toInteger (length (words x)))
+
+myOr :: [Bool] -> Bool
+myOr [] = False
+myOr (x:xs) = x || myOr xs
+
+myOr' :: [Bool] -> Bool
+myOr' xs = foldr (||) False xs
+
+myOr'' :: [Bool] -> Bool
+myOr'' = foldr (||) False
