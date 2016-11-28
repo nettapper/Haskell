@@ -18,3 +18,10 @@ threeTupleMaker'' :: [a] -> [a] -> [(a, a, a)]
 threeTupleMaker'' stops vowels = permThree stops vowels stops
   where permThree :: [a] -> [a] -> [a] -> [(a, a, a)]
         permThree xs ys zs = [(x, y, z) | x <- xs, y <- ys, z <- zs]
+
+-- this will find the avg word length
+-- seekritFunc $ unwords verbs
+seekritFunc :: String -> Int
+seekritFunc x =
+  div (sum (map length (words x)))
+      (length (words x))
