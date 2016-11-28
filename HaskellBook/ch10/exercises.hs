@@ -40,3 +40,18 @@ myOr' xs = foldr (||) False xs
 
 myOr'' :: [Bool] -> Bool
 myOr'' = foldr (||) False
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny _ [] = False
+myAny f (x:xs) = if f x
+                    then True
+                    else myAny f xs
+
+myAny' :: (a -> Bool) -> [a] -> Bool
+myAny' _ [] = False
+myAny' f (x:xs) = f x || myAny f xs
+
+myAny'' :: (a -> Bool) -> [a] -> Bool
+myAny'' f xs = foldr (cond f) False xs
+  where cond :: (a -> Bool) -> a -> Bool -> Bool
+        cond f a b = f a || b
