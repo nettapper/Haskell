@@ -55,3 +55,37 @@ myAny'' :: (a -> Bool) -> [a] -> Bool
 myAny'' f xs = foldr (cond f) False xs
   where cond :: (a -> Bool) -> a -> Bool -> Bool
         cond f a b = f a || b
+
+myElem :: Eq a => a -> [a] -> Bool
+myElem _ []     = False
+myElem a (x:xs) = if a == x
+                     then True
+                     else myElem a xs
+
+myElem' :: Eq a => a -> [a] -> Bool
+myElem' a = foldr (equalOrBool a) False
+  where equalOrBool :: Eq a => a -> a -> Bool -> Bool
+        equalOrBool a elem bool = (elem == a) || bool
+
+myReverse :: [a] -> [a]
+myReverse = foldr (\x y -> y ++ [x]) []
+
+myMap :: (a -> b) -> [a] -> [b]
+myMap f = foldr (\a b -> f a : b) []
+
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter f = foldr iff []
+  where iff a b = if f a
+                     then a : b
+                     else b
+
+squish :: [[a]] -> [a]
+-- squish = foldr (\a b -> a ++ b) []
+squish = foldr (++) []
+
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f = foldr (\a b -> f a ++ b) []
+
+squishAgain :: [[a]] -> [a]
+-- squishAgain = squishMap (++ [])  -- not as clear as the id function
+squishAgain = squishMap id
