@@ -89,3 +89,20 @@ squishMap f = foldr (\a b -> f a ++ b) []
 squishAgain :: [[a]] -> [a]
 -- squishAgain = squishMap (++ [])  -- not as clear as the id function
 squishAgain = squishMap id
+
+-- Note that this is a partial function :/
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy f xs = foldr (maxHelper f) (head xs) xs
+  where maxHelper :: (a -> a -> Ordering) -> a -> a -> a
+        maxHelper f x y = case f x y of
+                               LT -> y
+                               EQ -> y
+                               GT -> x
+
+myMiniumBy :: (a -> a -> Ordering) -> [a] -> a
+myMiniumBy f xs = foldr (maxHelper f) (head xs) xs
+  where maxHelper :: (a -> a -> Ordering) -> a -> a -> a
+        maxHelper f x y = case f x y of
+                               LT -> x
+                               EQ -> x
+                               GT -> y
