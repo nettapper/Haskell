@@ -25,8 +25,8 @@ mapExpected = Node (Node Leaf 4 Leaf) 2 (Node Leaf 5 Leaf)
 mapOkay :: IO ()
 mapOkay =
   if mapTree (+1) testTree' == mapExpected
-  then print "yup okay!"
-  else error "test failed!"
+  then putStrLn "treeMap okay!"
+  else error "treeMap failed!"
 
 preorder :: BinaryTree a -> [a]
 preorder Leaf = []
@@ -69,6 +69,7 @@ testPostorder =
 
 main :: IO ()
 main = do
+  mapOkay
   testPreorder
   testInorder
   testPostorder
