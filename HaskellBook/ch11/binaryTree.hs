@@ -32,19 +32,19 @@ preorder :: BinaryTree a -> [a]
 preorder Leaf = []
 preorder tree = preorder' tree []
   where preorder' Leaf list                = list
-        preorder' (Node left a right) list = [a] ++ (preorder' left list) ++ (preorder' right list)
+        preorder' (Node left a right) list = [a] ++ preorder' left list ++ preorder' right list
 
 inorder :: BinaryTree a -> [a]
 inorder Leaf = []
 inorder tree = inorder' tree []
   where inorder' Leaf list                = list
-        inorder' (Node left a right) list = (inorder' left list) ++ [a] ++ (inorder' right list)
+        inorder' (Node left a right) list = inorder' left list ++ [a] ++ inorder' right list
 
 postorder :: BinaryTree a -> [a]
 postorder Leaf = []
 postorder tree = postorder' tree []
   where postorder' Leaf list                = list
-        postorder' (Node left a right) list =(postorder' left list) ++ (postorder' right list) ++ [a]
+        postorder' (Node left a right) list = postorder' left list ++ postorder' right list ++ [a]
 
 testTree :: BinaryTree Integer
 testTree = Node (Node Leaf 1 Leaf) 2 (Node Leaf 3 Leaf)
