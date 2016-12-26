@@ -46,6 +46,9 @@ postorder tree = postorder' tree []
   where postorder' Leaf list                = list
         postorder' (Node left a right) list = postorder' left list ++ postorder' right list ++ [a]
 
+foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
+foldTree f b tree = foldr f b (inorder tree)
+
 testTree :: BinaryTree Integer
 testTree = Node (Node Leaf 1 Leaf) 2 (Node Leaf 3 Leaf)
 
@@ -67,9 +70,15 @@ testPostorder =
   then putStrLn "Postorder fine!"
   else putStrLn "postorder failed check"
 
+testFoldTree :: IO ()
+testFoldTree = if foldTree (+) 0 testTree == 6
+               then putStrLn "FoldTree works"
+               else putStrLn "FoldTree fails check"
+
 main :: IO ()
 main = do
   mapOkay
   testPreorder
   testInorder
   testPostorder
+  testFoldTree
