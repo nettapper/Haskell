@@ -46,11 +46,17 @@ type Presses = Int
 -- 'A' -> [('*', 1), ('2', 1)]
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTaps phone c = if isUpper c
-                         then ('^', 1) : reverseTapsLower phone (toLower c)
+                         then ('^', 1) : reverseTapsLower phone (toLower c) -- TODO: search for '^' key
                          else reverseTapsLower phone c
 
+keysList :: DaPhone -> [Key]
+keysList = undefined
+
 reverseTapsLower :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTapsLower = undefined
+reverseTapsLower phone = reverseTapsLowerOnKeys (keysList phone)
+
+reverseTapsLowerOnKeys :: [Key] -> Char -> [(Digit, Presses)]
+reverseTapsLowerOnKeys = undefined
 
 numOfTaps :: Key -> Char -> (Digit, Presses)
 numOfTaps (OneKey c1) targetChar              = indexOf targetChar [c1]
@@ -61,7 +67,7 @@ numOfTaps (FiveKey c1 c2 c3 c4 c5) targetChar = indexOf targetChar [c1, c2, c3, 
 
 indexOf :: Char -> String -> (Digit, Presses)
 indexOf targetChar charsToCheck = indexOfHelper charsToCheck targetChar (0 :: Int)
-  where indexOfHelper [] _ _ = (' ', -1)
+  where indexOfHelper [] _ _ = (' ', -1)  --  would returning 'Maybe a' would be better?
         indexOfHelper (x:xs) target count = if target == x
                                                then (target, count + 1)
                                                else indexOfHelper xs target (count + 1)
