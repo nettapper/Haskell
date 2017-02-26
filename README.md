@@ -4,9 +4,9 @@ My main goal is to learn [Haskell](https://www.haskell.org/), this repo exists t
 
 ## Current Progress in Haskell Book
 
-> The times below track my progresss through the Haskell Book  
+> The times below track my progresss through the Haskell Book (see link below).  
 > [Haskell Programming From First Principals](http://haskellbook.com/) written by Christopher Allen and Julie Moronuki  
-> I'd **highly** reccomend the book if your interested in Haskell at all!  
+> I'd **highly** reccomend the book if you're interested in Haskell, it is a great book for independent learners!  
 
 Haskell_Ch01_to_Ch07_Time ≈ 10hrs  
 Haskell_Ch08_Time = sum [2, 37, 62] = 101 = 1 hr 41 min  
