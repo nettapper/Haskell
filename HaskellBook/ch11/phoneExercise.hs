@@ -50,7 +50,10 @@ reverseTaps phone c = if isUpper c
                          else reverseTapsLower phone c
 
 keysList :: DaPhone -> [Key]
-keysList = undefined
+keysList (DaPhone a b c
+                  d e f
+                  g h i
+                  j k l) = [a, b, c, d, e, f, g, h, i, j, k, l]
 
 reverseTapsLower :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTapsLower phone = reverseTapsLowerOnKeys (keysList phone)
