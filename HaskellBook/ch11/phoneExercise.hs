@@ -12,17 +12,17 @@ data DaPhone =
 -- *(^)    0(+_)  #(.,)
 aPhone :: DaPhone
 aPhone = DaPhone
-         (OneKey '1')                  (FourKey 'a' 'b' 'c' '2') (FourKey 'd' 'e' 'f' '3')
-         (FourKey 'g' 'h' 'i' '4')     (FourKey 'j' 'k' 'l' '5') (FourKey 'm' 'n' 'o' '6')
-         (FiveKey 'p' 'q' 'r' 's' '7') (FourKey 't' 'u' 'v' '8') (FiveKey 'w' 'x' 'y' 'z' '9')
-         (OneKey '^')                  (TwoKey ' ' '0')          (TwoKey '.' ',')
+         (OneKey '1' '1')                  (FourKey '2' 'a' 'b' 'c' '2') (FourKey '3' 'd' 'e' 'f' '3')
+         (FourKey '4' 'g' 'h' 'i' '4')     (FourKey '5' 'j' 'k' 'l' '5') (FourKey '6' 'm' 'n' 'o' '7')
+         (FiveKey '7' 'p' 'q' 'r' 's' '7') (FourKey '8' 't' 'u' 'v' '8') (FiveKey '9' 'w' 'x' 'y' 'z' '9')
+         (OneKey '*' '^')                  (TwoKey '0' ' ' '0')          (TwoKey '#' '.' ',')
 
 data Key =
-    OneKey   Char
-  | TwoKey   Char Char
-  | ThreeKey Char Char Char
-  | FourKey  Char Char Char Char
-  | FiveKey  Char Char Char Char Char
+    OneKey   Digit Char
+  | TwoKey   Digit Char Char
+  | ThreeKey Digit Char Char Char
+  | FourKey  Digit Char Char Char Char
+  | FiveKey  Digit Char Char Char Char Char
 
 convo :: [String]
 convo =
@@ -46,7 +46,7 @@ type Presses = Int
 -- 'A' -> [('*', 1), ('2', 1)]
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTaps phone c = if isUpper c
-                         then ('^', 1) : reverseTapsLower phone (toLower c) -- TODO: search for '^' key
+                         then reverseTapsLower phone '^' ++ reverseTapsLower phone (toLower c) -- TODO: search for '^' key
                          else reverseTapsLower phone c
 
 keysList :: DaPhone -> [Key]
@@ -65,17 +65,17 @@ reverseTapsLowerOnKeys ks c = foldl getDigitPresses [] ks
                                   else [] ++ xs
 
 numOfTaps :: Key -> Char -> (Digit, Presses)
-numOfTaps (OneKey c1) targetChar              = indexOf targetChar [c1]
-numOfTaps (TwoKey c1 c2) targetChar           = indexOf targetChar [c1, c2]
-numOfTaps (ThreeKey c1 c2 c3) targetChar      = indexOf targetChar [c1, c2, c3]
-numOfTaps (FourKey c1 c2 c3 c4) targetChar    = indexOf targetChar [c1, c2, c3, c4]
-numOfTaps (FiveKey c1 c2 c3 c4 c5) targetChar = indexOf targetChar [c1, c2, c3, c4, c5]
+numOfTaps (OneKey key c1) targetChar              = (key, indexOf targetChar [c1])
+numOfTaps (TwoKey key c1 c2) targetChar           = (key, indexOf targetChar [c1, c2])
+numOfTaps (ThreeKey key c1 c2 c3) targetChar      = (key, indexOf targetChar [c1, c2, c3])
+numOfTaps (FourKey key c1 c2 c3 c4) targetChar    = (key, indexOf targetChar [c1, c2, c3, c4])
+numOfTaps (FiveKey key c1 c2 c3 c4 c5) targetChar = (key, indexOf targetChar [c1, c2, c3, c4, c5])
 
-indexOf :: Char -> String -> (Digit, Presses)
-indexOf targetChar charsToCheck = indexOfHelper charsToCheck targetChar (0 :: Int)
-  where indexOfHelper [] _ _ = (' ', -1)  --  would returning 'Maybe a' would be better?
+indexOf :: Char -> String -> Presses
+indexOf targetChar charsToCheck = indexOfHelper charsToCheck targetChar (0 :: Presses)
+  where indexOfHelper [] _ _ = -1 :: Presses  --  would returning 'Maybe a' would be better?
         indexOfHelper (x:xs) target count = if target == x
-                                               then (target, count + 1)
+                                               then count + 1
                                                else indexOfHelper xs target (count + 1)
 
 cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
