@@ -59,7 +59,10 @@ reverseTapsLower :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTapsLower phone = reverseTapsLowerOnKeys (keysList phone)
 
 reverseTapsLowerOnKeys :: [Key] -> Char -> [(Digit, Presses)]
-reverseTapsLowerOnKeys = undefined
+reverseTapsLowerOnKeys ks c = foldl getDigitPresses [] ks
+  where getDigitPresses xs k = if snd (numOfTaps k c) >= 0
+                                  then numOfTaps k c : xs
+                                  else [] ++ xs
 
 numOfTaps :: Key -> Char -> (Digit, Presses)
 numOfTaps (OneKey c1) targetChar              = indexOf targetChar [c1]
@@ -75,7 +78,9 @@ indexOf targetChar charsToCheck = indexOfHelper charsToCheck targetChar (0 :: In
                                                then (target, count + 1)
                                                else indexOfHelper xs target (count + 1)
 
-cellPhonesDead :: DaPhone
-               -> String
-               -> [(Digit, Presses)]
-cellPhonesDead = undefined
+cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
+cellPhonesDead daPhone = flatMap (reverseTaps daPhone)
+
+flatMap :: (a -> [b]) -> [a] -> [b]
+flatMap _ [] = []
+flatMap f (x:xs) = f x ++ flatMap f xs
