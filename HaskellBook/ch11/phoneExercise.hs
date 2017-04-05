@@ -79,8 +79,4 @@ indexOf targetChar charsToCheck = indexOfHelper charsToCheck targetChar (0 :: In
                                                else indexOfHelper xs target (count + 1)
 
 cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
-cellPhonesDead daPhone = flatMap (reverseTaps daPhone)
-
-flatMap :: (a -> [b]) -> [a] -> [b]
-flatMap _ [] = []
-flatMap f (x:xs) = f x ++ flatMap f xs
+cellPhonesDead daPhone = concatMap (reverseTaps daPhone)
