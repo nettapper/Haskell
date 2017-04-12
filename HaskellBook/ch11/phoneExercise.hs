@@ -99,7 +99,16 @@ mostPopularLetterHelper l (x:xs) = mostPopularLetterHelper (l ++ [(x, letterCoun
 
 getMostPopularLetter :: [(Char, Int)] -> Char
 getMostPopularLetter (x:xs) = fst $ foldl larger x xs
-  where larger :: (Char, Int) -> (Char, Int) -> (Char, Int)
-        larger old@(_, oi) new@(_, ni) = if oi > ni
-                                            then old
-                                            else new
+
+larger :: (Char, Int) -> (Char, Int) -> (Char, Int)
+larger old@(_, oi) new@(_, ni) = if oi > ni
+                                    then old
+                                    else new
+
+coolestLtr :: [String] -> Char
+coolestLtr s = fst $ largest $ map largest $ map (mostPopularLetterHelper []) s
+  where largest :: [(Char, Int)] -> (Char, Int)
+        largest (x:xs) = foldl larger x xs
+
+coolestWord :: [String] -> String
+coolestWord = undefined
