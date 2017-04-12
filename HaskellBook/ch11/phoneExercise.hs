@@ -80,3 +80,26 @@ indexOf targetChar charsToCheck = indexOfHelper charsToCheck targetChar (0 :: Pr
 
 cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
 cellPhonesDead daPhone = concatMap (reverseTaps daPhone)
+
+fingerTaps :: [(Digit, Presses)] -> Presses
+fingerTaps = foldl sumPresses 0
+  where sumPresses currentSum (_, press) = currentSum + press
+
+-- reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
+-- fingerTaps :: [(Digit, Presses)] -> Presses
+mostPopularLetter :: String -> Char
+mostPopularLetter [] = '?'
+mostPopularLetter s = getMostPopularLetter $ mostPopularLetterHelper [] s
+
+mostPopularLetterHelper :: [(Char, Int)] -> String -> [(Char, Int)]
+mostPopularLetterHelper l [] = l
+mostPopularLetterHelper l (x:xs) = mostPopularLetterHelper (l ++ [(x, letterCount x xs)]) (filter (/= x) xs)
+  where letterCount :: Char -> String -> Int
+        letterCount c str = length $ filter (== c) str
+
+getMostPopularLetter :: [(Char, Int)] -> Char
+getMostPopularLetter (x:xs) = fst $ foldl larger x xs
+  where larger :: (Char, Int) -> (Char, Int) -> (Char, Int)
+        larger old@(_, oi) new@(_, ni) = if oi > ni
+                                            then old
+                                            else new
