@@ -106,9 +106,18 @@ larger old@(_, oi) new@(_, ni) = if oi > ni
                                     else new
 
 coolestLtr :: [String] -> Char
-coolestLtr s = fst $ largest $ map largest $ map (mostPopularLetterHelper []) s
+coolestLtr s = fst $ largest $ map (largest . mostPopularLetterHelper []) s
   where largest :: [(Char, Int)] -> (Char, Int)
         largest (x:xs) = foldl larger x xs
 
+
 coolestWord :: [String] -> String
-coolestWord = undefined
+coolestWord [] = ""
+coolestWord l  = fst $ foldl keepLarger ("", -1) $ wordCount $ concatMap words l
+  where keepLarger a@(_,i) b@(_,j) = if i >= j then a else b
+
+wordCount :: [String] -> [(String, Int)]
+wordCount []     = []
+wordCount (x:xs) = wordCountHelper x xs : wordCount xs
+  where wordCountHelper x = foldl f (x, 1)
+        f ai@(a, i) b     = if a == b then (a, i+1) else ai
