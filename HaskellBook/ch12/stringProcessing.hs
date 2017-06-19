@@ -29,11 +29,20 @@ countTheBeforeVowel s = sum $ map f zs
                          otherwise -> 0
 
 startsWithVowel :: String -> Bool
-startsWithVowel (s:_) = case s of
-                             'a' -> True
-                             'e' -> True
-                             'i' -> True
-                             'o' -> True
-                             'u' -> True
-                             otherwise -> False
+startsWithVowel (s:_) = isVowel s
 
+-- >>> countVowels "the cow"
+--2
+-- >>> countVowels "Mikolajczak"
+-- 4
+countVowels :: String -> Integer
+countVowels s = toInteger . length . filter (== True) $ map isVowel s
+
+isVowel :: Char -> Bool
+isVowel s = case s of
+                 'a' -> True
+                 'e' -> True
+                 'i' -> True
+                 'o' -> True
+                 'u' -> True
+                 otherwise -> False
