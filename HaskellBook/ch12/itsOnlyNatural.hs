@@ -11,7 +11,8 @@ data Nat =
 -- >>> natToInteger (Succ (Succ Zero))
 -- 2
 natToInteger :: Nat -> Integer
-natToInteger = undefined
+natToInteger Zero     = (0 :: Integer)
+natToInteger (Succ n) = 1 + natToInteger n
 
 -- >>> integerToNat 0
 -- Just Zero
@@ -22,7 +23,12 @@ natToInteger = undefined
 -- >>> integerToNat (-1)
 -- Nothing
 integerToNat :: Integer -> Maybe Nat
-integerToNat = undefined
+integerToNat i = if i < 0
+                    then Nothing
+                    else Just $ go i
+                      where go :: Integer -> Nat
+                            go 0 = Zero
+                            go i = Succ $ go $ i - 1
 
 -- Needed to make GhcMod work!
 main :: IO()
