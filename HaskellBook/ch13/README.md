@@ -4,6 +4,7 @@ I'll do my best to update the list of them here but there might not be any chapt
 
 # Did
 Read 13.1, .2, and .3 thus far
+Read 13.3 to 13.8 inclusive thus far
 
 # Repos
 - https://github.com/haskellbook/hello
