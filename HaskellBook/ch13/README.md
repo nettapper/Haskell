@@ -8,3 +8,6 @@ Read 13.3 to 13.8 inclusive thus far
 
 # Repos
 - https://github.com/haskellbook/hello
+
+# Hangman Game
+- Took the .gitignore from the haskellbook/hello
