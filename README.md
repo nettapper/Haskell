@@ -14,7 +14,7 @@ Haskell_Ch09_Time = sum [45, 37, 23, 20, 32, 49, 86, 5] = 297 = 4 hr 57 min
 Haskell_Ch10_Time = sum [9, 18, 53, 51, 11, 32, 15, 24] = 213 = 3 hr 33 min  
 Haskell_Ch11_Time = sum [22, 20, 74, 17, 46, 23, 54, 2, 104, 29, 19, 55, 37, 44, 66] = 612 = 10 hr 12 min  
 Haskell_Ch12_Time = sum [9, 49, 22, 43, 13, 30, 47, 36]  
-Haskell_Ch13_Time = sum [16, 53, 56, 6]  
+Haskell_Ch13_Time = sum [16, 53, 56, 6, 20]  
 
 **Note:** I've recorded this data always rounding to the nearest minute. The only exception is that Ch1 to Ch7 are extimates because I didn't decide that I wanted to record the time it took to complete each chapter until I was part way through Ch07. I estimated Ch1 to Ch7 based on the time the other chapters took, the number of haskell videos I've watched on YouTube (>20hrs), and my time programming with Haskell before. I'd consider 10hrs a very conservative estimate for the first 7 chapters. YMMV.
 
