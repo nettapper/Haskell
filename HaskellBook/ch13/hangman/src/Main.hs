@@ -6,6 +6,7 @@ import Data.Maybe (isJust)
 import Data.List (intersperse)
 import System.Exit (exitSuccess)
 import System.Random (randomRIO)
+import System.IO (stdout, hSetBuffering, BufferMode(NoBuffering))
 
 newtype WordList =
   WordList [String]
@@ -17,10 +18,10 @@ allWords = do
   return $ WordList (lines dict)
 
 minWordLength :: Int
-minWordLength = 5
+minWordLength = 3
 
 maxWordLength :: Int
-maxWordLength = 9
+maxWordLength = 7
 
 gameWords :: IO WordList
 gameWords = do
@@ -93,7 +94,7 @@ handleGuess puzzle guess = do
 
 gameOver :: Puzzle -> IO ()
 gameOver (Puzzle wordToGuess _ guessed) = do
-  if (length guessed) >= 7
+  if (length guessed) >= maxWordLength
      then do putStrLn "You lose!"
              putStrLn $ "The word was: " ++ wordToGuess
              exitSuccess
@@ -119,6 +120,7 @@ runGame puzzle = forever $ do
 
 main :: IO ()
 main = do
+  hSetBuffering stdout NoBuffering  -- need to make the prompt show up initially
   word <- randomWord'
   let puzzle = freshPuzzle (fmap toLower word)
   runGame puzzle
