@@ -93,12 +93,14 @@ handleGuess puzzle guess = do
         return (fillInCharacter puzzle guess)
 
 gameOver :: Puzzle -> IO ()
-gameOver (Puzzle wordToGuess _ guessed) = do
-  if (length guessed) >= maxWordLength
-     then do putStrLn "You lose!"
-             putStrLn $ "The word was: " ++ wordToGuess
-             exitSuccess
-     else return ()
+gameOver (Puzzle wordToGuess filledInSoFar guessed) = do
+  let numberOfGuesses filledInSoFar guessed = length guessed - correctGuesses filledInSoFar
+        where correctGuesses ms = length $ filter isJust ms
+   in if (numberOfGuesses filledInSoFar guessed) >= maxWordLength
+         then do putStrLn "You lose!"
+                 putStrLn $ "The word was: " ++ wordToGuess
+                 exitSuccess
+                 else return ()
 
 gameWin :: Puzzle -> IO ()
 gameWin (Puzzle _ filledInSoFar _) =
