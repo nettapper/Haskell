@@ -1,18 +1,22 @@
 import Control.Monad (forever)
-import System.Exit (exitSuccess)
+import System.Exit (exitSuccess, exitFailure)
+import Data.Char (toLower, isAlpha)
 
 -- you can use the following command to run from the cli w/o compilation!
 -- stack runghc palidromeExitSuccess.hs
 
-palindrome :: IO ()
-palindrome = forever $ do
+main :: IO ()
+main = runPalindrome
+
+runPalindrome :: IO ()
+runPalindrome = forever $ do
   line1 <- getLine
-  case (line1 == reverse line1) of
+  case isPalindrome line1 of
        True -> do
          putStrLn "It's a palindrome"
          exitSuccess
        False -> putStrLn "Nope!"
 
-main :: IO ()
-main = palindrome
-
+isPalindrome :: String -> Bool
+isPalindrome p = (p' == reverse p')
+  where p' = map toLower $ filter isAlpha p
