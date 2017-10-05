@@ -6,6 +6,7 @@ I'll do my best to update the list of them here but there might not be any chapt
 Read 13.1, .2, and .3 thus far
 Read 13.3 to 13.8 inclusive thus far
 Read did up to 13.14 thus far
+Ch11 vigenre now accepts input from the cli
 
 # Repos
 - https://github.com/haskellbook/hello

@@ -31,4 +31,11 @@ test = if decode (encode myMessage myKeyword) myKeyword == myMessage
        else putStrLn "messages don't match"
 
 main :: IO ()
-main = test
+main = do
+  putStrLn "Enter your message and your keyword on seperate lines."
+  message <- getLine
+  keyword <- getLine
+  let encoded = encode message keyword
+  putStrLn $ "Encoded: " ++ encoded
+  return ()
+
