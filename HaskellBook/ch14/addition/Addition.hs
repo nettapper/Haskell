@@ -2,6 +2,7 @@ module Addition where
 
 import Test.Hspec
 import Test.QuickCheck
+import ExploringQuickcheck
 
 sayHello :: IO ()
 sayHello = putStrLn "Hello!"
@@ -26,6 +27,9 @@ main = hspec $ do
     it "0 myMult 10 is 0" $ do
       0 `myMult` 10 `shouldBe` (0 :: Integer)
 
+    it "trivialSample is contains ones" $ do
+      ts <- trivialSample
+      head ts `shouldBe` (1 :: Int)
 
     it "x + 1 is always greater than x" $ do
       property $ \x -> x + 1 > (x :: Int)
