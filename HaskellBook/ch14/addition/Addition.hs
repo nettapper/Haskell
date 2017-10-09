@@ -2,13 +2,20 @@ module Addition where
 
 import Test.Hspec
 import Test.QuickCheck
-import ExploringQuickcheck
+import ExploringQuickcheck (trivialSample, runQuickCheckWithOutHspec)
 
 sayHello :: IO ()
 sayHello = putStrLn "Hello!"
 
 main :: IO ()
-main = hspec $ do
+main = do
+  putStrLn "--- runHspec --- "
+  runHspec
+  putStrLn "--- runQuickCheckWithOutHspec ---"
+  runQuickCheckWithOutHspec
+
+runHspec :: IO ()
+runHspec = hspec $ do
   describe "Addition" $ do
     it "1 + 1 is greater than 1" $ do
       (1 + 1) > (1 :: Integer) `shouldBe` True

@@ -65,3 +65,15 @@ genMaybe' = do
             , (3, return (Just a))
             ]
 
+prop_additionGreater :: Int -> Bool
+prop_additionGreater x = x + 1 > x
+
+prop_additionGreaterUntrueProperty :: Int -> Bool
+prop_additionGreaterUntrueProperty x = x + x > x  -- 0 + 0 /> 0
+
+runQuickCheckWithOutHspec :: IO ()
+runQuickCheckWithOutHspec = do
+  quickCheck prop_additionGreater
+  putStrLn "This next test should fail:"
+  quickCheck prop_additionGreaterUntrueProperty
+
