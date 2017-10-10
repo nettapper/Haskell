@@ -47,18 +47,18 @@ main :: IO ()
 main = do
   mode <- getArgs
   case mode of
-       [arg] ->
-         case arg of
-              "from" -> convertFromMorse
-              "to" -> convertToMorse
-              _ -> argError
+    [arg] ->
+      case arg of
+        "from" -> convertFromMorse
+        "to" -> convertToMorse
         _ -> argError
+    _ -> argError
   where argError = do
-        putStrLn "Please specify the\
-                  \ first argument\
-                  \ as being 'from' or\
-                  \ 'to' morse,\
-                  \ such as: morse to"
-        exitFailure
+          putStrLn "Please specify the\
+          \ first argument\
+          \ as being 'from' or\
+          \ 'to' morse,\
+          \ such as: morse to"
+          exitFailure
 
 
