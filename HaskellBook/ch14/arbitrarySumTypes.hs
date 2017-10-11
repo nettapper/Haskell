@@ -22,5 +22,18 @@ sumGenEqual = do
 sumGenCharInt :: Gen (Sum Char Int)
 sumGenCharInt = sumGenEqual
 
+sumGenFirstPlz :: ( Arbitrary a
+                  , Arbitrary b
+                  ) =>
+                  Gen (Sum a b)
+sumGenFirstPlz = do
+  a <- arbitrary
+  b <- arbitrary
+  frequency [ (10, return $ First a)
+            , (1, return $ Second b)]
+
 main :: IO ()
-main = sample sumGenCharInt
+main = do
+  sample sumGenCharInt
+  putStrLn " --- "
+  sample (sumGenFirstPlz :: Gen (Sum String Int))
