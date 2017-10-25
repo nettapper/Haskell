@@ -20,6 +20,13 @@ usingQC = do
   -- quickCheck $ (plusAssociative :: Float -> Float -> Float -> Bool)  -- Wont work
   quickCheck $ (multAssociative :: Integer -> Integer -> Integer -> Bool)
   quickCheck $ (multCommutative :: Integer -> Integer -> Bool)
+  quickCheck $ (quotLaw :: Integer -> Integer -> Bool)
+  quickCheck $ (divLaw :: Integer -> Integer -> Bool)
+
+quotLaw _ 0 = True  -- quot by 0
+quotLaw x y = (quot x y) * y + (rem x y) == x
+divLaw _ 0 = True  -- div by 0
+divLaw x y = (div x y) * y + (mod x y) == x
 
 multAssociative x y z = (x * y) * z == x * (y * z)
 multCommutative x y = x * y == y * x
