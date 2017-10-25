@@ -24,6 +24,9 @@ usingQC = do
   quickCheck $ (divLaw :: Integer -> Integer -> Bool)
   -- quickCheck $ (isCarrotAssc :: Integer -> Integer -> Integer -> Bool)  -- no, uncomment to see yourself
   -- quickCheck $ (isCarrotComm :: Integer -> Integer -> Bool)  -- and no, uncomment to see yourself
+  quickCheck $ (rList :: [Int] -> Bool)
+
+rList xs = reverse (reverse xs) == id xs
 
 isCarrotAssc x y z = (x ^ y) ^ z == x ^ (y ^ z)
 isCarrotComm x y = x ^ y == y ^ x
