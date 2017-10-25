@@ -15,7 +15,13 @@ usingQC = do
   quickCheck $ ((listOrdered . sort) :: [Integer] -> Bool)
   quickCheck $ ((listOrdered . sort) :: [String] -> Bool)
   quickCheck $ ((listOrdered . sort) :: [Int] -> Bool)
+  quickCheck $ (plusAssociative :: Int -> Int -> Int -> Bool)
+  quickCheck $ (plusCommutative :: Int -> Int -> Bool)
+  -- quickCheck $ (plusAssociative :: Float -> Float -> Float -> Bool)  -- Wont work
 
+
+plusAssociative x y z = (x + y) + z == x + (y + z)
+plusCommutative x y = x + y == y + x
 
 -- for any sorted list this should hold
 listOrdered :: (Ord a) => [a] -> Bool
