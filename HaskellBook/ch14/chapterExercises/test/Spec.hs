@@ -18,7 +18,11 @@ usingQC = do
   quickCheck $ (plusAssociative :: Int -> Int -> Int -> Bool)
   quickCheck $ (plusCommutative :: Int -> Int -> Bool)
   -- quickCheck $ (plusAssociative :: Float -> Float -> Float -> Bool)  -- Wont work
+  quickCheck $ (multAssociative :: Integer -> Integer -> Integer -> Bool)
+  quickCheck $ (multCommutative :: Integer -> Integer -> Bool)
 
+multAssociative x y z = (x * y) * z == x * (y * z)
+multCommutative x y = x * y == y * x
 
 plusAssociative x y z = (x + y) + z == x + (y + z)
 plusCommutative x y = x + y == y + x
