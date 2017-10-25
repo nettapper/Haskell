@@ -11,5 +11,6 @@ test-suite chapterExercises-test
   build-depends:       base
                      , hspec
                      , QuickCheck
+  other-modules:       WordNumber
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
