@@ -22,6 +22,11 @@ usingQC = do
   quickCheck $ (multCommutative :: Integer -> Integer -> Bool)
   quickCheck $ (quotLaw :: Integer -> Integer -> Bool)
   quickCheck $ (divLaw :: Integer -> Integer -> Bool)
+  -- quickCheck $ (isCarrotAssc :: Integer -> Integer -> Integer -> Bool)  -- no, uncomment to see yourself
+  -- quickCheck $ (isCarrotComm :: Integer -> Integer -> Bool)  -- and no, uncomment to see yourself
+
+isCarrotAssc x y z = (x ^ y) ^ z == x ^ (y ^ z)
+isCarrotComm x y = x ^ y == y ^ x
 
 quotLaw _ 0 = True  -- quot by 0
 quotLaw x y = (quot x y) * y + (rem x y) == x
