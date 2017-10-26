@@ -30,6 +30,13 @@ usingQC = do
   quickCheck $ (fDollar (* 2323) :: Integer -> Bool)
   quickCheck $ (fDot id id :: Integer -> Bool)
   quickCheck $ (fDot (* 2) (^ 3) :: Integer -> Bool)
+  -- quickCheck $ (areFoldsEqual :: [Integer] -> [Integer] -> Bool)  -- answer, no
+  quickCheck $ (areFoldsEqual' :: [[Integer]] -> Bool)
+  quickCheck $ (areFoldsEqual' :: [[String]] -> Bool)
+
+areFoldsEqual' as = foldr (++) [] as == concat as
+
+areFoldsEqual as bs = (++) as bs == foldr (:) as bs
 
 fDot f g x = (f . g) x == f (g x)
 
