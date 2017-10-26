@@ -33,6 +33,12 @@ usingQC = do
   -- quickCheck $ (areFoldsEqual :: [Integer] -> [Integer] -> Bool)  -- answer, no
   quickCheck $ (areFoldsEqual' :: [[Integer]] -> Bool)
   quickCheck $ (areFoldsEqual' :: [[String]] -> Bool)
+  -- quickCheck $ (f :: Int -> [Integer] -> Bool) -- this one took a while but I guess not
+  quickCheck $ (read'n'show :: Int -> Bool)
+
+read'n'show x = (read (show x)) == x
+
+f n xs = length (take n xs) == n
 
 areFoldsEqual' as = foldr (++) [] as == concat as
 
