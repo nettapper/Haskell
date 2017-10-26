@@ -35,6 +35,10 @@ usingQC = do
   quickCheck $ (areFoldsEqual' :: [[String]] -> Bool)
   -- quickCheck $ (f :: Int -> [Integer] -> Bool) -- this one took a while but I guess not
   quickCheck $ (read'n'show :: Int -> Bool)
+  quickCheck $ ((\x -> squareIdentity x == square x) :: Double -> Bool)  -- I'll leave the last one failing!
+
+square x = x * x
+squareIdentity = square . sqrt
 
 read'n'show x = (read (show x)) == x
 
