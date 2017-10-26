@@ -25,6 +25,16 @@ usingQC = do
   -- quickCheck $ (isCarrotAssc :: Integer -> Integer -> Integer -> Bool)  -- no, uncomment to see yourself
   -- quickCheck $ (isCarrotComm :: Integer -> Integer -> Bool)  -- and no, uncomment to see yourself
   quickCheck $ (rList :: [Int] -> Bool)
+  quickCheck $ (fDollar id :: Int -> Bool)
+  quickCheck $ (fDollar (+ 10) :: Int -> Bool)
+  quickCheck $ (fDollar (* 2323) :: Integer -> Bool)
+  quickCheck $ (fDot id id :: Integer -> Bool)
+  quickCheck $ (fDot (* 2) (^ 3) :: Integer -> Bool)
+
+fDot f g x = (f . g) x == f (g x)
+
+fDollar :: (Eq b) => (a -> b) -> a -> Bool
+fDollar f a = (f a) == (f $ a)
 
 rList xs = reverse (reverse xs) == id xs
 
