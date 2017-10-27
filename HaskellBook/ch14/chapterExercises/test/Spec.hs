@@ -1,10 +1,14 @@
 import TestWordNumber (run)
 import Idempotence (run)
+import Gen (run)
 import Test.QuickCheck
 import Data.List (sort)
 
 main :: IO ()
 main = do
+  putStrLn "Gen"
+  Gen.run
+  putStrLn "--------------"
   putStrLn "TestWordNumber"
   TestWordNumber.run
   putStrLn "--------------"
