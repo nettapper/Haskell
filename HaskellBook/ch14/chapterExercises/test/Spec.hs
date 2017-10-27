@@ -6,13 +6,13 @@ import Data.List (sort)
 main :: IO ()
 main = do
   putStrLn "TestWordNumber"
-  -- TestWordNumber.run
+  TestWordNumber.run
   putStrLn "--------------"
   putStrLn "Idempotence"
   Idempotence.run
   putStrLn "--------------"
   putStrLn "QuickCheck"
-  -- usingQC
+  usingQC
 
 usingQC :: IO ()
 usingQC = do
