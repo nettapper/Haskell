@@ -47,3 +47,22 @@ fillInCharacter (Puzzle word filledInSoFar s) c =
           newFilledInSoFar =
             zipWith (zipper c) word filledInSoFar
 
+handleGuess :: Puzzle -> Char -> IO Puzzle
+handleGuess puzzle guess = do
+  putStrLn $ "Your guess was: " ++ guess:[]
+  case (charInWord puzzle guess
+      , alreadyGuessed puzzle guess) of
+      (_, True) -> do
+        putStrLn "You alread guessed that\
+                  \ character, pick\
+                  \ something else!"
+        return puzzle
+      (True, _) -> do
+        putStrLn "The character was in the\
+                  \ word, filling in the\
+                  \ puzzle accordly."
+        return (fillInCharacter puzzle guess)
+      (False, _) -> do
+        putStrLn "The character wasn't in the\
+                  \ word, please try again."
+        return (fillInCharacter puzzle guess)

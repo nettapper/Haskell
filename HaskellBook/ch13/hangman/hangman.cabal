@@ -35,7 +35,6 @@ test-suite tests
   main-is:              Spec.hs
   hs-source-dirs:       test
   build-depends:        base
-                      , QuickCheck
                       , hspec
                       , hangman
   default-language:     Haskell2010
