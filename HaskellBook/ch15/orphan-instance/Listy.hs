@@ -16,3 +16,6 @@ newtype Listy a =
 -- Duplicate instance declarations:
 --   instance [safe] Monoid (Listy a) -- Defined at Listy.hs:9:10
 --   instance Monoid (Listy a) -- Defined at ListyInstances.hs:4:10
+--
+--   See the HaskellBook p603.
+--   In the CH with Monoid/Semigroup : Reusing alegbras by asking for alegbras
