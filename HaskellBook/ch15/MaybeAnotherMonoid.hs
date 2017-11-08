@@ -10,9 +10,9 @@ newtype First' a =
   First' { getFirst' :: Optional a }
   deriving (Eq, Show)
 
-instance Monoid (First' a) where
-  mempty = undefined
-  mappend _ _ = undefined
+instance (Monoid a) => Monoid (First' a) where
+  mempty = First' Nada
+  mappend x y = First' $ mappend (getFirst' x) (getFirst' y)
 
 instance (Arbitrary a) => Arbitrary (First' a) where
   arbitrary = genFirst'
@@ -22,7 +22,8 @@ genFirst' = do
     a <- arbitrary
     return $ First' a
 
-firstMappend :: First' a
+firstMappend :: (Monoid a)
+             => First' a
              -> First' a
              -> First' a
 firstMappend = mappend
