@@ -18,6 +18,7 @@ instance Arbitrary Trivial where
 
 type TrivialAssc = Trivial -> Trivial -> Trivial -> Bool
 -- End Question 1
+--
 -- Question 2
 newtype Identity a = Identity a deriving (Show, Eq)
 
