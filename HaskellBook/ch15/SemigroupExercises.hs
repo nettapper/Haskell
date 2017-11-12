@@ -61,6 +61,37 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 
 type ThreeAssc a b c = Three a b c -> Three a b c -> Three a b c -> Bool
 -- End Question 4
+-- Question 5
+data Four a b c d = Four a b c d deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four a b c d) where
+  (Four a b c d) <> (Four a' b' c' d') = Four (a <> a') (b <> b') (c <> c') (d <> d')
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    c <- arbitrary
+    d <- arbitrary
+    return (Four a b c d)
+
+type FourAssc a b c d = Four a b c d -> Four a b c d -> Four a b c d -> Bool
+-- End Question 5
+-- Question 6
+newtype BoolConj = BoolConj Bool
+-- End Question 6
+-- Question 7
+newtype BoolDisj = BoolDisj Bool
+-- End Question 7
+-- Question 8
+data Or a b =
+    Fst a
+  | Snd b
+-- End Question 8
+-- Question 9
+newtype Combine a b =
+  Combine { unCombine :: (a -> b) }
+-- End Question 9
 
 main :: IO ()
 main = do
@@ -68,3 +99,4 @@ main = do
   quickCheck (semigroupAssc :: IdentityAssc (Sum Int))
   quickCheck (semigroupAssc :: TwoAssc (Sum Int) (Product Int))
   quickCheck (semigroupAssc :: ThreeAssc (Sum Int) (Product Int) [Int])
+  quickCheck (semigroupAssc :: FourAssc [Float] (Sum Int) (Product Int) [Int])
