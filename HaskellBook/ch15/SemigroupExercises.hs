@@ -78,15 +78,49 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
 type FourAssc a b c d = Four a b c d -> Four a b c d -> Four a b c d -> Bool
 -- End Question 5
 -- Question 6
-newtype BoolConj = BoolConj Bool
+newtype BoolConj = BoolConj Bool deriving (Eq, Show)
+
+instance Arbitrary BoolConj where
+  arbitrary = do
+    b <- arbitrary
+    return $ BoolConj b
+
+instance Semigroup BoolConj where
+  (BoolConj b) <> (BoolConj b') = BoolConj (b && b')
+
+type BoolConjAssc = BoolConj -> BoolConj -> BoolConj -> Bool
 -- End Question 6
 -- Question 7
-newtype BoolDisj = BoolDisj Bool
+newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
+type BoolDisjAssc = BoolDisj -> BoolDisj -> BoolDisj -> Bool
+
+instance Arbitrary BoolDisj where
+  arbitrary = do
+    b <- arbitrary
+    return $ BoolDisj b
+
+instance Semigroup BoolDisj where
+  (BoolDisj b) <> (BoolDisj b') = BoolDisj $ b || b'
 -- End Question 7
 -- Question 8
 data Or a b =
     Fst a
   | Snd b
+  deriving (Eq, Show)
+type OrAssc a b = Or a b -> Or a b -> Or a b -> Bool
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    frequency [(1, return $ Fst a)
+              ,(1, return $ Snd b)]
+
+instance Semigroup (Or a b) where
+  (Fst a) <> (Fst a') = Fst a
+  (Snd b) <> (Fst a) = Snd b
+  (Fst a) <> (Snd b) = Snd b
+  (Snd b) <> (Snd b') = Snd b
 -- End Question 8
 -- Question 9
 newtype Combine a b =
@@ -100,3 +134,7 @@ main = do
   quickCheck (semigroupAssc :: TwoAssc (Sum Int) (Product Int))
   quickCheck (semigroupAssc :: ThreeAssc (Sum Int) (Product Int) [Int])
   quickCheck (semigroupAssc :: FourAssc [Float] (Sum Int) (Product Int) [Int])
+  quickCheck (semigroupAssc :: BoolConjAssc)
+  quickCheck (semigroupAssc :: BoolDisjAssc)
+  quickCheck (semigroupAssc :: OrAssc (Sum Integer) (Product Double))
+
