@@ -146,6 +146,17 @@ instance (CoArbitrary a, Arbitrary a) => Arbitrary (Comp a) where
     a <- arbitrary
     return $ Comp a
 -- End Question 10
+-- Question 11
+data Validation a b =
+    Fail a
+  | Succ b
+  deriving (Eq, Show)
+
+instance (Semigroup a) => Semigroup (Validation a b) where
+  (Fail b) <> (Fail b') = Fail $ b <> b'
+  (Succ a) <> _ = Succ a
+  _ <> (Succ a) = Succ a
+-- End Question 11
 
 main :: IO ()
 main = do
@@ -167,4 +178,12 @@ main = do
   putStrLn $ show $ unComp (h <> h) 1 == 3
   let i = Comp (\a -> a + (10 :: Int))
   putStrLn $ show $ unComp (h <> i) 1 == 12
+  let failure :: String -> Validation String Int
+      failure = Fail
+      success :: Int -> Validation String Int
+      success = Succ
+  print $ success 1 <> failure "blah"
+  print $ failure "woot" <> failure "blah"
+  print $ success 1 <> success 2
+  print $ failure "woot" <> success 2
 
