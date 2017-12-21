@@ -125,6 +125,14 @@ instance Semigroup (Or a b) where
 -- Question 9
 newtype Combine a b =
   Combine { unCombine :: (a -> b) }
+
+instance (Semigroup b) => Semigroup (Combine a b) where
+  (Combine b) <> (Combine b') = Combine (b <> b')
+
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+  arbitrary = do
+    b <- arbitrary
+    return $ Combine b
 -- End Question 9
 
 main :: IO ()
@@ -137,4 +145,10 @@ main = do
   quickCheck (semigroupAssc :: BoolConjAssc)
   quickCheck (semigroupAssc :: BoolDisjAssc)
   quickCheck (semigroupAssc :: OrAssc (Sum Integer) (Product Double))
+  let f = Combine $ (\n -> Sum (n + 1))
+  let g = Combine $ (\n -> Sum (n - 1))
+  putStrLn $ show $ unCombine (f <> g) 0 == 0
+  putStrLn $ show $ unCombine (f <> g) 1 == 2
+  putStrLn $ show $ unCombine (f <> f) 1 == 4
+  putStrLn $ show $ unCombine (g <> f) 1 == 2
 
