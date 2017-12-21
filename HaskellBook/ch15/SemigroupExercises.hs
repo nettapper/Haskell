@@ -134,6 +134,18 @@ instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
     b <- arbitrary
     return $ Combine b
 -- End Question 9
+-- Question 10
+newtype Comp a =
+  Comp { unComp :: (a -> a) }
+
+instance Semigroup (Comp a) where
+  (Comp a) <> (Comp a') = Comp $ a . a'
+
+instance (CoArbitrary a, Arbitrary a) => Arbitrary (Comp a) where
+  arbitrary = do
+    a <- arbitrary
+    return $ Comp a
+-- End Question 10
 
 main :: IO ()
 main = do
@@ -151,4 +163,8 @@ main = do
   putStrLn $ show $ unCombine (f <> g) 1 == 2
   putStrLn $ show $ unCombine (f <> f) 1 == 4
   putStrLn $ show $ unCombine (g <> f) 1 == 2
+  let h = Comp (\a -> a + (1 :: Int))
+  putStrLn $ show $ unComp (h <> h) 1 == 3
+  let i = Comp (\a -> a + (10 :: Int))
+  putStrLn $ show $ unComp (h <> i) 1 == 12
 
