@@ -14,16 +14,20 @@ seqSum (a:b:others) = if a == b
                          else seqSum (b:others)
 
 main :: IO ()
-main = hspec $ do
-  describe "captcha" $ do
-    it "1122 should be 3" $ do
-      captcha "1122" `shouldBe` 3
+main = do
+  l <- getLine
+  putStrLn $ "the captcha of " ++ l ++ " is: " ++ show (captcha l)
+  putStrLn "------"
+  hspec $ do
+    describe "captcha" $ do
+      it "1122 should be 3" $ do
+        captcha "1122" `shouldBe` 3
 
-    it "1111 should be 4" $ do
-      captcha "1111" `shouldBe` 4
+      it "1111 should be 4" $ do
+        captcha "1111" `shouldBe` 4
 
-    it "1234 should be 0" $ do
-      captcha "1234" `shouldBe` 0
+      it "1234 should be 0" $ do
+        captcha "1234" `shouldBe` 0
 
-    it "91212129 should be 3" $ do
-      captcha "91212129" `shouldBe` 9
+      it "91212129 should be 3" $ do
+        captcha "91212129" `shouldBe` 9
