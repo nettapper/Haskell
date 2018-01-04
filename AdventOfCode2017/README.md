@@ -23,3 +23,24 @@ captcha
 Finished in 0.0015 seconds
 4 examples, 0 failures
 ```
+## 2 Checksum
+Enter you input line by line  
+press return after the last line  
+then press `ctrl-d` to signal that you're done inputting  
+``` text
+λ git master* → stack 2.checksum.hs
+5 1 9 5
+7 5 3
+2 4 6 8
+18
+---
+
+calcChecksum
+  example given should be 18
+mySplit
+  should return a empty for an empty
+  should 4 elems given "5 1 9 5"
+
+Finished in 0.0020 seconds
+3 examples, 0 failures
+```
