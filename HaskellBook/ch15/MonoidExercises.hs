@@ -29,6 +29,30 @@ type TrivialAssc =
 instance Arbitrary Trivial where
   arbitrary = return Trivial
 -- End Question 1
+-- Question 2
+
+-- End Question 2
+-- Question 3
+
+-- End Question 3
+-- Question 4
+
+-- End Question 4
+-- Question 5
+
+-- End Question 5
+-- Question 6
+
+-- End Question 6
+-- Question 7
+
+-- End Question 7
+-- Question 8
+
+-- End Question 8
+-- Question 9
+
+-- End Question 9
 
 main :: IO ()
 main = do
