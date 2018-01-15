@@ -86,9 +86,24 @@ instance Arbitrary BoolConj where
     return $ BoolConj b
 
 type BoolConjAssc = BoolConj -> BoolConj -> BoolConj -> Bool
-
 -- End Question 4
 -- Question 5
+newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
+
+instance Semigroup BoolDisj where
+  BoolDisj b <> BoolDisj b' = BoolDisj (b || b')
+
+instance Monoid BoolDisj where
+  mempty = BoolDisj False
+  mappend = (<>)
+
+instance Arbitrary BoolDisj where
+  arbitrary = do
+    b <- arbitrary
+    return $ BoolDisj b
+
+type BoolDisjAssc = BoolDisj -> BoolDisj -> BoolDisj -> Bool
+
 
 -- End Question 5
 -- Question 6
@@ -122,5 +137,9 @@ main = do
   quickCheck (semigroupAssc :: BoolConjAssc)
   quickCheck (monoidRightIdentity :: BoolConj -> Bool)
   quickCheck (monoidLeftIdentity :: BoolConj -> Bool)
+  putStrLn "\n BoolDisj"
+  quickCheck (semigroupAssc :: BoolDisjAssc)
+  quickCheck (monoidRightIdentity :: BoolDisj -> Bool)
+  quickCheck (monoidLeftIdentity :: BoolDisj -> Bool)
 
 
