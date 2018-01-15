@@ -71,6 +71,21 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 -- End Question 3
 -- Question 4
+newtype BoolConj = BoolConj Bool deriving (Eq, Show)
+
+instance Semigroup BoolConj where
+  BoolConj b <> BoolConj b' = BoolConj (b && b')
+
+instance Monoid BoolConj where
+  mempty = BoolConj True
+  mappend = (<>)
+
+instance Arbitrary BoolConj where
+  arbitrary = do
+    b <- arbitrary
+    return $ BoolConj b
+
+type BoolConjAssc = BoolConj -> BoolConj -> BoolConj -> Bool
 
 -- End Question 4
 -- Question 5
@@ -103,4 +118,9 @@ main = do
   quickCheck (semigroupAssc :: TwoAssc (Sum Int) Trivial)
   quickCheck (monoidRightIdentity :: Two (Sum Int) Trivial -> Bool)
   quickCheck (monoidLeftIdentity :: Two (Sum Int) Trivial -> Bool)
+  putStrLn "\n BoolConj"
+  quickCheck (semigroupAssc :: BoolConjAssc)
+  quickCheck (monoidRightIdentity :: BoolConj -> Bool)
+  quickCheck (monoidLeftIdentity :: BoolConj -> Bool)
+
 
