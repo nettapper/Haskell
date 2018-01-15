@@ -51,6 +51,23 @@ instance (Arbitrary a) => Arbitrary (Identity a) where
     return (Identity a)
 -- End Question 2
 -- Question 3
+data Two a b = Two a b deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
+  (Two a b) <> (Two a' b') = Two (a <> a') (b <> b')
+
+instance (Semigroup a, Monoid a, Semigroup b, Monoid b) => Monoid (Two a b) where
+  mempty = Two mempty mempty
+  mappend = (<>)
+
+type TwoAssc a b =
+  (Two a b) -> (Two a b) -> (Two a b) -> Bool
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    return $ Two a b
 
 -- End Question 3
 -- Question 4
@@ -74,10 +91,16 @@ instance (Arbitrary a) => Arbitrary (Identity a) where
 
 main :: IO ()
 main = do
+  putStrLn "Trivial"
   quickCheck (semigroupAssc :: TrivialAssc)
   quickCheck (monoidRightIdentity :: Trivial -> Bool)
   quickCheck (monoidRightIdentity :: Trivial -> Bool)
+  putStrLn "\n Identity"
   quickCheck (semigroupAssc :: IdentityAssc (Sum Int))
   quickCheck (monoidRightIdentity :: Identity (Sum Int) -> Bool)
   quickCheck (monoidLeftIdentity :: Identity (Sum Int) -> Bool)
+  putStrLn "\n Two"
+  quickCheck (semigroupAssc :: TwoAssc (Sum Int) Trivial)
+  quickCheck (monoidRightIdentity :: Two (Sum Int) Trivial -> Bool)
+  quickCheck (monoidLeftIdentity :: Two (Sum Int) Trivial -> Bool)
 
