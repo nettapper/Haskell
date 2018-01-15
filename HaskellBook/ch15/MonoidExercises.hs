@@ -36,8 +36,6 @@ newtype Identity a =
 instance (Semigroup a) => Semigroup (Identity a) where
   (Identity a) <> (Identity b) = Identity (a <> b)
 
-data Hole = Hole
-
 instance (Monoid a, Semigroup a) => Monoid (Identity a) where
   mempty = Identity mempty
   mappend = (<>)
@@ -103,10 +101,24 @@ instance Arbitrary BoolDisj where
     return $ BoolDisj b
 
 type BoolDisjAssc = BoolDisj -> BoolDisj -> BoolDisj -> Bool
-
-
 -- End Question 5
 -- Question 6
+newtype Combine a b =
+  Combine { unCombine :: a -> b }
+
+instance (Semigroup b) => Semigroup (Combine a b) where
+  (Combine f) <> (Combine g) = Combine (\x -> (f x) <> (g x))
+
+data Hole = Hole
+
+instance (Monoid b, Semigroup b) => Monoid (Combine a b) where
+  mempty = Combine mempty
+  mappend = (<>)
+
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+  arbitrary = do
+    f <- arbitrary
+    return $ Combine f
 
 -- End Question 6
 -- Question 7
@@ -141,5 +153,7 @@ main = do
   quickCheck (semigroupAssc :: BoolDisjAssc)
   quickCheck (monoidRightIdentity :: BoolDisj -> Bool)
   quickCheck (monoidLeftIdentity :: BoolDisj -> Bool)
-
+  putStrLn "\n Combine"
+  let f = Combine $ \n -> Sum (n + 1)
+  putStrLn $ show $ unCombine (mappend f mempty) $ 1
 
