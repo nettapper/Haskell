@@ -129,11 +129,16 @@ instance (Semigroup a) => Monoid (Comp a) where
   mappend = (<>)
 -- End Question 7
 -- Question 8
+newtype Mem s a =
+  Mem {
+    runMem :: s -> (a,s)
+  }
 
+instance (Semigroup a, Monoid a) => Monoid (Mem s a) where
+  mempty = Mem $ \x -> (mempty, x)
+  (Mem { runMem = f }) `mappend` (Mem { runMem = g }) =
+    Mem $ \x -> ((fst (f x)) <> (fst (g x)), snd (g (snd (f x))))
 -- End Question 8
--- Question 9
-
--- End Question 9
 
 main :: IO ()
 main = do
@@ -160,4 +165,17 @@ main = do
   putStrLn "\n Combine"
   let f = Combine $ \n -> Sum (n + 1)
   putStrLn $ show $ unCombine (mappend f mempty) $ 1
+  putStrLn "\n Mem"
+  -- testMem
+
+-- f' :: Mem Int [Char]
+-- f' = Mem $ (\s -> ("hi",s+1))
+
+-- testMem = do
+  --   print $ runMem (f' <> mempty) 0
+  --   print $ runMem (mempty <> f') 0
+  --   print $ (runMem mempty 0 :: (String,Int))
+  --   print $ runMem (f' <> mempty) 0 == runMem f' 0
+  --   print $ runMem (mempty <> f') 0 == runMem f' 0
+
 
