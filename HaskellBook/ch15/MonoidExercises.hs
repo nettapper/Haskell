@@ -109,8 +109,6 @@ newtype Combine a b =
 instance (Semigroup b) => Semigroup (Combine a b) where
   (Combine f) <> (Combine g) = Combine (\x -> (f x) <> (g x))
 
-data Hole = Hole
-
 instance (Monoid b, Semigroup b) => Monoid (Combine a b) where
   mempty = Combine mempty
   mappend = (<>)
@@ -119,10 +117,16 @@ instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
   arbitrary = do
     f <- arbitrary
     return $ Combine f
-
 -- End Question 6
 -- Question 7
+newtype Comp a = Comp (a -> a)
 
+instance (Semigroup a) => Semigroup (Comp a) where
+  (Comp f) <> (Comp g) = Comp $ f <> g
+
+instance (Semigroup a) => Monoid (Comp a) where
+  mempty = Comp $ id
+  mappend = (<>)
 -- End Question 7
 -- Question 8
 
