@@ -1,23 +1,57 @@
+-- TODO explain this file
+--
 
--- Note: right now this is only for the mornings
+data Workout = Workout {
+    pushCount :: Rep
+  , sitCount :: Rep
+  , squatCount :: Rep
+  } deriving (Show)
 
+instance Monoid Workout where
+  mempty = Workout {
+      pushCount = 0
+    , sitCount = 0
+    , squatCount = 0
+    }
+  mappend w1 w2 = Workout {
+      pushCount = pushCount w1 + pushCount w2
+    , sitCount = sitCount w1 + sitCount w2
+    , squatCount = squatCount w1 + squatCount w2
+    }
+
+type Day = Integer
+type Rep = Integer
+
+
+-- Starting numbers for buildWorkout
+pushups :: Rep
 pushups = 5
+
+situps :: Rep
 situps = 2*pushups
+
+squats :: Rep
 squats = 3*pushups
 
-days :: [Integer]
+-- An infinite list of days used to build workouts
+days :: [Day]
 days = [0..]
 
-workout :: Integer -> (Integer, Integer, Integer)
-workout day = (weekTarget*pushups, weekTarget*situps, weekTarget*squats)
+-- Builds a workout based on the current day
+-- This is required becase every week the workouts double
+buildWorkout :: Day -> Workout
+buildWorkout day = Workout {
+    pushCount = weekTarget * pushups
+  , sitCount = weekTarget * situps
+  , squatCount = weekTarget * squats
+  }
   where week = (day `div` 7)
         weekTarget = 2^week
 
-done :: [(Integer, Integer, Integer)]
-done = map workout days
+-- An infinite list of workouts
+workouts :: [Workout]
+workouts = map buildWorkout days
 
-total :: [(Integer, Integer, Integer)] -> (Integer, Integer, Integer)
-total done = myTripleSum (0,0,0) done
-
-myTripleSum init list = foldl f init list
-  where f (init1, init2, init3) (list1, list2, list3) = (init1 + list1, init2 + list2, init3 + list3)
+-- This will reduce a finite list of workouts to a singe workout summation
+total :: [Workout] -> Workout
+total = mconcat
