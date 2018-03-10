@@ -1,5 +1,11 @@
--- TODO explain this file
+-- This file is used to count the workout totals done by following the challenges
+-- in the book "Unbreakable — Thom Shea".
 --
+-- To follow this workout you'll need discipline. You should also be paying
+-- attention to your 'inner dialog' aka 'your self talk'!
+--
+-- If you want to learn more you can read the blog post below.
+-- TODO add link
 
 -- imports
 import Control.Monad(when)
@@ -28,7 +34,7 @@ type Day = Integer
 type Rep = Integer
 
 
--- Starting numbers for buildWorkout
+-- Starting reps for buildWorkout
 pushups :: Rep
 pushups = 5
 
@@ -38,12 +44,19 @@ situps = 2*pushups
 squats :: Rep
 squats = 3*pushups
 
+-- An infinite list of nums used to build days
+nums :: [Day]
+nums = [0..]
+
 -- An infinite list of days used to build workouts
+-- two per day => [0,0,1,1,2,2 ...]
 days :: [Day]
-days = [0..]
+days = concatMap f z
+  where f (a,b) = [a,b]
+        z = zip nums nums
 
 -- Builds a workout based on the current day
--- This is required becase every week the workouts double
+-- This is required because every week the workouts double
 buildWorkout :: Day -> Workout
 buildWorkout day = Workout {
     pushCount = weekTarget * pushups
@@ -69,7 +82,7 @@ main = do
   let r = reads lenStr
   when (not $ null r) $ do
     let len = fst $ head r
-        finiteWorkouts = take len workouts
+        finiteWorkouts = take (2 * len) workouts
         w = total finiteWorkouts
     putStrLn $ "The workout totals for " ++ show len ++ " days are: " ++ show w
 
