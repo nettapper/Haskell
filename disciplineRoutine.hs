@@ -1,6 +1,11 @@
 -- TODO explain this file
 --
 
+-- imports
+import Control.Monad(when)
+
+
+-- add my types
 data Workout = Workout {
     pushCount :: Rep
   , sitCount :: Rep
@@ -55,3 +60,16 @@ workouts = map buildWorkout days
 -- This will reduce a finite list of workouts to a singe workout summation
 total :: [Workout] -> Workout
 total = mconcat
+
+main :: IO ()
+main = do
+  putStrLn "This program will calculate you workout totals."
+  putStr "Please enter the number of day(s):"
+  lenStr <- getLine
+  let r = reads lenStr
+  when (not $ null r) $ do
+    let len = fst $ head r
+        finiteWorkouts = take len workouts
+        w = total finiteWorkouts
+    putStrLn $ "The workout totals for " ++ show len ++ " days are: " ++ show w
+
