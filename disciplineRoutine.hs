@@ -5,7 +5,7 @@
 -- attention to your 'inner dialog' aka 'your self talk'!
 --
 -- If you want to learn more you can read the blog post below.
--- TODO add link
+-- https://connerdunn.com/2018/03/automating-the-discipline-challenge-pt1-the-code
 
 -- imports
 import Control.Monad(when)
@@ -76,7 +76,7 @@ total = mconcat
 
 main :: IO ()
 main = do
-  putStrLn "This program will calculate you workout totals."
+  putStrLn "This program will calculate your workout totals."
   putStr "Please enter the number of day(s):"
   lenStr <- getLine
   let r = reads lenStr
