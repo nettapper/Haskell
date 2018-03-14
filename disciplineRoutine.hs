@@ -1,11 +1,11 @@
--- This file is used to count the workout totals done by following the challenges
--- in the book "Unbreakable — Thom Shea".
+-- This file is used to count the workout totals. 
+-- This challenge is inspired from the book "Unbreakable — Thom Shea".
 --
 -- To follow this workout you'll need discipline. You should also be paying
 -- attention to your 'inner dialog' aka 'your self talk'!
 --
 -- If you want to learn more you can read the blog post below.
--- TODO add link
+-- https://connerdunn.com/2018/03/automating-the-discipline-challenge-pt1-the-code/
 
 -- imports
 import Control.Monad(when)
@@ -51,9 +51,9 @@ nums = [0..]
 -- An infinite list of days used to build workouts
 -- two per day => [0,0,1,1,2,2 ...]
 days :: [Day]
-days = concatMap f z
+days = concatMap f z  -- apply f to every element of z, and then concat the results together
   where f (a,b) = [a,b]
-        z = zip nums nums
+        z = zip nums nums  -- z = [(0,0), (1,1), ...]
 
 -- Builds a workout based on the current day
 -- This is required because every week the workouts double
@@ -63,8 +63,8 @@ buildWorkout day = Workout {
   , sitCount = weekTarget * situps
   , squatCount = weekTarget * squats
   }
-  where week = (day `div` 7)
-        weekTarget = 2^week
+  where week = (day `div` 7)  -- week = 0 should yeild a modifer of 2^0 = 1
+        weekTarget = 2^week   -- week = 1 should double the workouts, and so on
 
 -- An infinite list of workouts
 workouts :: [Workout]
